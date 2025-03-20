@@ -40,4 +40,4 @@ python3 -m verl.trainer.main_ppo \
     trainer.test_freq=10000 \
     trainer.project_name=math \
     trainer.experiment_name=$EXPERIMENT_NAME \
-    trainer.total_epochs=1 2>&1 | tee verl_demo.log
+    trainer.total_epochs=128 2>&1 | tee verl_demo.log
