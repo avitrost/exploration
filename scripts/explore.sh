@@ -6,7 +6,7 @@ export DATA_DIR=$DATA_ROOT/$TASK
 python3 examples/data_preprocess/preprocess_small_math.py --local_dir $DATA_DIR
 
 export N_GPUS=2
-export BASE_MODEL=atrost/qwen_3b_rl_math_2_epochs
+export BASE_MODEL=Qwen/Qwen2.5-3B
 export ROLLOUT_TP_SIZE=2
 export EXPERIMENT_NAME=ppo-$TASK-qwen2.5-3B-$JOB_NUM
 
