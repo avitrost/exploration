@@ -1,9 +1,9 @@
-export TASK=math
+export TASK=aime
 
 export DATA_ROOT=data
 export DATA_DIR=$DATA_ROOT/$TASK
 
-python3 examples/data_preprocess/preprocess_small_math.py --local_dir $DATA_DIR
+python3 examples/data_preprocess/aime.py --local_dir $DATA_DIR
 
 export N_GPUS=2
 export BASE_MODEL=Qwen/Qwen2.5-3B
@@ -14,14 +14,14 @@ export EXPERIMENT_NAME=ppo-$TASK-qwen2.5-3B-$JOB_NUM
 python3 -m verl.trainer.main_ppo \
     data.train_files=$DATA_DIR/train.parquet \
     data.val_files=$DATA_DIR/test.parquet \
-    data.train_batch_size=50 \
-    data.val_batch_size=50 \
+    data.train_batch_size=30 \
+    data.val_batch_size=30 \
     data.max_prompt_length=1024 \
     data.max_response_length=1024 \
     data.filter_overlong_prompts=True \
     actor_rollout_ref.model.path=$BASE_MODEL \
     actor_rollout_ref.actor.optim.lr=1e-6 \
-    actor_rollout_ref.actor.ppo_mini_batch_size=50 \
+    actor_rollout_ref.actor.ppo_mini_batch_size=30 \
     actor_rollout_ref.actor.ppo_micro_batch_size=2 \
     actor_rollout_ref.rollout.log_prob_micro_batch_size=2 \
     actor_rollout_ref.rollout.tensor_model_parallel_size=$ROLLOUT_TP_SIZE \
