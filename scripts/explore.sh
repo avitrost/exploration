@@ -3,7 +3,7 @@ export TASK=aime
 export DATA_ROOT=data
 export DATA_DIR=$DATA_ROOT/$TASK
 
-python3 examples/data_preprocess/aime.py --local_dir $DATA_DIR
+python3 examples/data_preprocess/aime_28.py --local_dir $DATA_DIR
 
 export N_GPUS=4
 export BASE_MODEL=Qwen/Qwen2.5-Math-7B
