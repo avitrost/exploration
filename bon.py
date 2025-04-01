@@ -21,7 +21,7 @@ from vllm import LLM, SamplingParams
 # Adjust the import below based on the actual module/function names in the repo.
 
 # Global variable for data source.
-data_source = "HuggingFaceH4/MATH-500"
+data_source = "Maxwell-Jia/AIME_2024"
 
 # Instruction to be appended to each problem.
 instruction_following = "Let's think step by step and output the final answer within \\boxed{}."
@@ -54,6 +54,9 @@ import numpy as np
 
 
 def extract_solution(solution_str):
+    print(solution_str)
+    print(last_boxed_only_string(solution_str))
+    print(remove_boxed(last_boxed_only_string(solution_str)))
     return remove_boxed(last_boxed_only_string(solution_str))
 
 
@@ -61,12 +64,12 @@ def extract_solution(solution_str):
 def make_map_fn(split):
     def process_fn(example, idx):
         # Remove the 'problem' field and append the instruction.
-        question = example.pop('problem')
+        question = example.pop('Problem')
         question = question + ' ' + instruction_following
 
         # Remove the 'solution' field and extract the ground truth.
-        answer = example.pop('solution')
-        solution = extract_solution(answer)
+        solution = str(example.pop('Answer'))
+        # solution = extract_solution(answer)
 
         data = {
             "data_source": data_source,
@@ -82,7 +85,8 @@ def make_map_fn(split):
             "extra_info": {
                 'split': split,
                 'index': idx
-            }
+            },
+            "unique_id": f"{data_source}-{split}-{idx}"
         }
         return data
     return process_fn
@@ -118,8 +122,8 @@ def main():
     args = parser.parse_args()
 
     # Load the MATH-500 dataset (using the test split; adjust if needed)
-    print("Loading MATH-500 dataset...")
-    dataset = load_dataset("HuggingFaceH4/MATH-500", split="test")
+    print("Loading Maxwell-Jia/AIME_2024 dataset...")
+    dataset = load_dataset("Maxwell-Jia/AIME_2024", split="test")
 
     # Preprocess the dataset by mapping each example.
     print("Preprocessing dataset...")
@@ -132,7 +136,7 @@ def main():
         model=model_id,
         dtype="float16",
         tensor_parallel_size=1,  # Adjust based on your GPU count
-        gpu_memory_utilization=0.9,
+        gpu_memory_utilization=0.8,
         trust_remote_code=True   # Required for Qwen models
     )
 
@@ -140,7 +144,7 @@ def main():
         temperature=1,
         top_p=1,
         max_tokens=1024,
-        n=1024
+        n=1
     )
 
 
@@ -156,7 +160,7 @@ def main():
 
         # Generate N responses for the current problem.
         print(f"Generating {args.n} responses...")
-        outputs = llm.generate([prompt_text], sampling_params)
+        outputs = llm.generate([prompt_text] * 1024, sampling_params)
 
 
         # Use Math-Verify to check each generated response.
@@ -195,7 +199,7 @@ def main():
     print(f"\nCounts of first correct answer by position (0 = none correct):")
     print(first_correct_counts)
     # Save the first_correct_counts array to a file
-    np.save(f"first_correct_counts_{args.n}.npy", first_correct_counts)
+    np.save(f"first_correct_counts_{args.n}_aime.npy", first_correct_counts)
     print(f"Saved first_correct_counts to first_correct_counts_{args.n}.npy")
 
     # Calculate and print some useful metrics

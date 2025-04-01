@@ -5,10 +5,10 @@ export DATA_DIR=$DATA_ROOT/$TASK
 
 python3 examples/data_preprocess/aime.py --local_dir $DATA_DIR
 
-export N_GPUS=2
-export BASE_MODEL=Qwen/Qwen2.5-3B
+export N_GPUS=4
+export BASE_MODEL=Qwen/Qwen2.5-Math-7B
 export ROLLOUT_TP_SIZE=2
-export EXPERIMENT_NAME=ppo-$TASK-qwen2.5-3B-$JOB_NUM
+export EXPERIMENT_NAME=ppo-$TASK-Qwen2.5-Math-7B-$JOB_NUM
 
 
 python3 -m verl.trainer.main_ppo \
@@ -25,7 +25,7 @@ python3 -m verl.trainer.main_ppo \
     actor_rollout_ref.actor.ppo_micro_batch_size=2 \
     actor_rollout_ref.rollout.log_prob_micro_batch_size=2 \
     actor_rollout_ref.rollout.tensor_model_parallel_size=$ROLLOUT_TP_SIZE \
-    actor_rollout_ref.rollout.gpu_memory_utilization=0.4 \
+    actor_rollout_ref.rollout.gpu_memory_utilization=0.7 \
     actor_rollout_ref.ref.log_prob_micro_batch_size=2 \
     critic.optim.lr=1e-5 \
     critic.model.path=$BASE_MODEL \
