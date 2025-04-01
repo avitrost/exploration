@@ -7,7 +7,7 @@ python3 examples/data_preprocess/aime.py --local_dir $DATA_DIR
 
 export N_GPUS=3
 export BASE_MODEL=Qwen/Qwen2.5-Math-7B
-export ROLLOUT_TP_SIZE=3
+export ROLLOUT_TP_SIZE=1
 export EXPERIMENT_NAME=ppo-$TASK-Qwen2.5-Math-7B-$JOB_NUM
 
 
