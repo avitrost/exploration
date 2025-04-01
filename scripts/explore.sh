@@ -26,10 +26,10 @@ python3 -m verl.trainer.main_ppo \
     actor_rollout_ref.rollout.log_prob_micro_batch_size_per_gpu=1 \
     actor_rollout_ref.rollout.tensor_model_parallel_size=$ROLLOUT_TP_SIZE \
     actor_rollout_ref.rollout.gpu_memory_utilization=0.7 \
-    actor_rollout_ref.ref.log_prob_micro_batch_size=2 \
+    actor_rollout_ref.ref.log_prob_micro_batch_size_per_gpu=1 \
     critic.optim.lr=1e-5 \
     critic.model.path=$BASE_MODEL \
-    critic.ppo_micro_batch_size=2 \
+    critic.ppo_micro_batch_size_per_gpu=1 \
     algorithm.kl_ctrl.kl_coef=0.001 \
     trainer.logger=['console','wandb'] \
     +trainer.val_before_train=True \
