@@ -25,7 +25,7 @@ from vllm import LLM, SamplingParams
 data_source = "Maxwell-Jia/AIME_2024"
 
 # Instruction to be appended to each problem.
-instruction_following = "Let's think step by step and output the final answer within \\boxed{}."
+instruction_following = "Please reason step by step, and put your final answer within \\boxed{{}}."
 
 try:
     from math_verify.metric import math_metric
@@ -241,10 +241,15 @@ def main():
             extracted_solution = extract_solution(output_text)
             print(f"Extracted solution {gen_idx}: {extracted_solution}")
             for provided_answer in unique_outputs:
+                print(f"Comparing with provided answer: {provided_answer}")
                 if is_equiv(extracted_solution, provided_answer):
+                    print(f"Response {gen_idx + 1} is equivalent to a previous response: {provided_answer}")
                     # print(f"Response {gen_idx + 1} is equivalent to a previous response.")
                     novel_answer = False
                     break
+                else:
+                    print(f"Response {gen_idx + 1} is novel compared to: {provided_answer}")
+                input("Press Enter to continue...")  # Pause for debugging
             if novel_answer:
                 unique_outputs.add(extracted_solution)
                 # print(f"Novel response {gen_idx + 1}: {output_text}")
