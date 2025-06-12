@@ -150,11 +150,11 @@ def main():
     processed_dataset = dataset.map(make_map_fn("train"), with_indices=True)
 
     # Initialize the vLLM engine for Qwen/Qwen2.5-3B.
-    print("Initializing vLLM engine for Qwen/Qwen2.5-3B...")
+    print("Initializing vLLM engine for Qwen/Qwen3-1.7B...")
     model_id = "Qwen/Qwen3-1.7B"
     llm = LLM(
         model=model_id,
-        # dtype="float16",
+        dtype="bfloat16",
         tensor_parallel_size=1,  # Adjust based on your GPU count
         gpu_memory_utilization=0.8,
         trust_remote_code=True   # Required for Qwen models
