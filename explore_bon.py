@@ -239,6 +239,7 @@ def main():
             # Store unique outputs
             novel_answer = True
             extracted_solution = extract_solution(output_text)
+            print("Output text:", output_text)
             print(f"Extracted solution {gen_idx}: {extracted_solution}")
             for provided_answer in unique_outputs:
                 print(f"Comparing with provided answer: {provided_answer}")
