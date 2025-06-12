@@ -25,7 +25,7 @@ from vllm import LLM, SamplingParams
 data_source = "Maxwell-Jia/AIME_2024"
 
 # Instruction to be appended to each problem.
-instruction_following = "Please reason step by step, and put your final answer within \\boxed{{}}."
+instruction_following = "Please reason step by step, and put your final answer within \\boxed{}."
 
 try:
     from math_verify.metric import math_metric
