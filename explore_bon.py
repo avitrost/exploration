@@ -74,11 +74,54 @@ import numpy as np
 from collections import Counter
 
 
-# def extract_solution(solution_str):
-#     print(solution_str)
-#     print(last_boxed_only_string(solution_str))
-#     print(remove_boxed(last_boxed_only_string(solution_str)))
-#     return remove_boxed(last_boxed_only_string(solution_str))
+# def remove_boxed(s):
+#     if "\\boxed " in s:
+#         left = "\\boxed "
+#         assert s[:len(left)] == left
+#         return s[len(left):]
+
+#     left = "\\boxed{"
+
+#     assert s[:len(left)] == left
+#     assert s[-1] == "}"
+
+#     return s[len(left):-1]
+
+
+def last_boxed_only_string(string):
+    idx = string.rfind("\\boxed")
+    if "\\boxed " in string:
+        return "\\boxed " + string.split("\\boxed ")[-1].split("$")[0]
+    if idx < 0:
+        idx = string.rfind("\\fbox")
+        if idx < 0:
+            return None
+
+    i = idx
+    right_brace_idx = None
+    num_left_braces_open = 0
+    while i < len(string):
+        if string[i] == "{":
+            num_left_braces_open += 1
+        if string[i] == "}":
+            num_left_braces_open -= 1
+            if num_left_braces_open == 0:
+                right_brace_idx = i
+                break
+        i += 1
+
+    if right_brace_idx is None:
+        retval = None
+    else:
+        retval = string[idx:right_brace_idx + 1]
+
+    return retval
+
+def extract_solution(solution_str):
+    # print(solution_str)
+    # print(last_boxed_only_string(solution_str))
+    # print(remove_boxed(last_boxed_only_string(solution_str)))
+    return last_boxed_only_string(solution_str)
 
 
 # Preprocessing function to add a unique id and structure each data item.
@@ -195,13 +238,14 @@ def main():
                 # break
             # Store unique outputs
             novel_answer = True
+            extracted_solution = extract_solution(output_text)
             for provided_answer in unique_outputs:
-                if is_equiv(output_text, provided_answer):
+                if is_equiv(extracted_solution, provided_answer):
                     # print(f"Response {gen_idx + 1} is equivalent to a previous response.")
                     novel_answer = False
                     break
             if novel_answer:
-                unique_outputs.add(output_text)
+                unique_outputs.add(extracted_solution)
                 # print(f"Novel response {gen_idx + 1}: {output_text}")
 
         print(f"Total unique outputs: {len(unique_outputs)}")
