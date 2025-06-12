@@ -143,18 +143,18 @@ def main():
 
     # Load the MATH-500 dataset (using the test split; adjust if needed)
     print("Loading Maxwell-Jia/AIME_2024 dataset...")
-    dataset = load_dataset("Maxwell-Jia/AIME_2024", split="test")
+    dataset = load_dataset("Maxwell-Jia/AIME_2024", split="train")
 
     # Preprocess the dataset by mapping each example.
     print("Preprocessing dataset...")
-    processed_dataset = dataset.map(make_map_fn("test"), with_indices=True)
+    processed_dataset = dataset.map(make_map_fn("train"), with_indices=True)
 
     # Initialize the vLLM engine for Qwen/Qwen2.5-3B.
     print("Initializing vLLM engine for Qwen/Qwen2.5-3B...")
     model_id = "Qwen/Qwen3-1.7B"
     llm = LLM(
         model=model_id,
-        dtype="float16",
+        # dtype="float16",
         tensor_parallel_size=1,  # Adjust based on your GPU count
         gpu_memory_utilization=0.8,
         trust_remote_code=True   # Required for Qwen models
