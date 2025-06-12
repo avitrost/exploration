@@ -36,7 +36,7 @@ except ImportError:
 
 def is_correct(model_output: str, ground_truth: str) -> bool:
     verify_func = math_metric(
-        gold_extraction_target=(LatexExtractionConfig()),
+        gold_extraction_target=(LatexExtractionConfig(),),
         pred_extraction_target=(ExprExtractionConfig(), LatexExtractionConfig()),
     )
     ret_score = 0.
