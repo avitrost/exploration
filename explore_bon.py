@@ -226,7 +226,10 @@ def main():
 
         # Generate N responses for the current problem.
         print(f"Generating {args.n} responses...")
-        outputs = llm.generate([prompt_text] * 1024, sampling_params)
+        outputs = []
+        for _ in range(1024):
+            output = llm.generate([prompt_text], sampling_params)
+            outputs.extend(output)
 
 
         # Use Math-Verify to check each generated response.
@@ -252,7 +255,7 @@ def main():
                     break
                 else:
                     print(f"Response {gen_idx + 1} is novel compared to: {provided_answer}")
-                input("Press Enter to continue...")  # Pause for debugging
+                # input("Press Enter to continue...")  # Pause for debugging
             if novel_answer:
                 unique_outputs.add(extracted_solution)
                 # print(f"Novel response {gen_idx + 1}: {output_text}")
