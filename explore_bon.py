@@ -36,7 +36,7 @@ except ImportError:
 
 def is_correct(model_output: str, ground_truth: str) -> bool:
     verify_func = math_metric(
-        gold_extraction_target=(LatexExtractionConfig(),),
+        gold_extraction_target=(LatexExtractionConfig()),
         pred_extraction_target=(ExprExtractionConfig(), LatexExtractionConfig()),
     )
     ret_score = 0.
@@ -55,15 +55,15 @@ def is_equiv(output_1: str, output_2: str) -> bool:
     Check if two outputs are equivalent using Math-Verify.
     """
     verify_func = math_metric(
-        gold_extraction_target=(LatexExtractionConfig(),),
+        gold_extraction_target=(ExprExtractionConfig(), LatexExtractionConfig()),
         pred_extraction_target=(ExprExtractionConfig(), LatexExtractionConfig()),
     )
     ret_score = 0.
 
     try:
         ret_score_1, _ = verify_func([output_1], [output_2])
-        ret_score_2, _ = verify_func([output_2], [output_1])
-        ret_score = ret_score_1 or ret_score_2
+        # ret_score_2, _ = verify_func([output_2], [output_1])
+        ret_score = ret_score_1 #or ret_score_2
     except Exception as e:
         pass
 
