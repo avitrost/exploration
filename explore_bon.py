@@ -13,6 +13,7 @@ import argparse
 import csv
 import re
 from datasets import load_dataset
+from tqdm import tqdm
 
 # Import vLLM engine
 from vllm import LLM, SamplingParams
@@ -194,7 +195,7 @@ def main():
                 # break
             # Store unique outputs
             novel_answer = True
-            for provided_answer in unique_outputs:
+            for provided_answer in tqdm(unique_outputs):
                 if is_equiv(output_text, provided_answer):
                     # print(f"Response {gen_idx + 1} is equivalent to a previous response.")
                     novel_answer = False
