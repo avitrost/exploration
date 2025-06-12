@@ -194,8 +194,8 @@ def main():
     processed_dataset = dataset.map(make_map_fn("train"), with_indices=True)
 
     # Initialize the vLLM engine for Qwen/Qwen2.5-3B.
-    print("Initializing vLLM engine for Qwen/Qwen3-1.7B...")
-    model_id = "Qwen/Qwen3-1.7B"
+    print("Initializing vLLM engine for Qwen/Qwen3-1.7B-Base...")
+    model_id = "Qwen/Qwen3-1.7B-Base"
     llm = LLM(
         model=model_id,
         dtype="bfloat16",
@@ -205,9 +205,11 @@ def main():
     )
 
     sampling_params = SamplingParams(
-        temperature=1,
-        top_p=1,
-        max_tokens=38912,
+        temperature=0.7,
+        top_p=0.8,
+        top_k=20,
+        min_p=0,
+        max_tokens=32768,
         n=1
     )
 
