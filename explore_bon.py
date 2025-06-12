@@ -187,7 +187,7 @@ def main():
         # Use Math-Verify to check each generated response.
         first_correct = 0  # default: no correct response found
         unique_outputs = set()  # To track unique outputs
-        for gen_idx, output in enumerate(outputs):
+        for gen_idx, output in tqdm(enumerate(outputs)):
             output_text = output.outputs[0].text
             if first_correct == 0 and is_correct(output_text, ground_truth):
                 first_correct = gen_idx + 1  # record one-indexed position
@@ -195,7 +195,7 @@ def main():
                 # break
             # Store unique outputs
             novel_answer = True
-            for provided_answer in tqdm(unique_outputs):
+            for provided_answer in unique_outputs:
                 if is_equiv(output_text, provided_answer):
                     # print(f"Response {gen_idx + 1} is equivalent to a previous response.")
                     novel_answer = False
