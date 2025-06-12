@@ -201,7 +201,7 @@ def main():
                     break
             if novel_answer:
                 unique_outputs.add(output_text)
-                print(f"Novel response {gen_idx + 1}: {output_text}")
+                # print(f"Novel response {gen_idx + 1}: {output_text}")
 
         if first_correct == 0:
             print("No correct answer found among the generated responses.")
