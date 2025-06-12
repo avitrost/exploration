@@ -239,6 +239,7 @@ def main():
             # Store unique outputs
             novel_answer = True
             extracted_solution = extract_solution(output_text)
+            print(f"Extracted solution {gen_idx}: {extracted_solution}")
             for provided_answer in unique_outputs:
                 if is_equiv(extracted_solution, provided_answer):
                     # print(f"Response {gen_idx + 1} is equivalent to a previous response.")
