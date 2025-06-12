@@ -68,16 +68,16 @@ def is_equiv(output_1: str, output_2: str) -> bool:
 
     return ret_score
 
-from verl.utils.reward_score.math import remove_boxed, last_boxed_only_string
+# from verl.utils.reward_score.math import remove_boxed, last_boxed_only_string
 import numpy as np
 from collections import Counter
 
 
-def extract_solution(solution_str):
-    print(solution_str)
-    print(last_boxed_only_string(solution_str))
-    print(remove_boxed(last_boxed_only_string(solution_str)))
-    return remove_boxed(last_boxed_only_string(solution_str))
+# def extract_solution(solution_str):
+#     print(solution_str)
+#     print(last_boxed_only_string(solution_str))
+#     print(remove_boxed(last_boxed_only_string(solution_str)))
+#     return remove_boxed(last_boxed_only_string(solution_str))
 
 
 # Preprocessing function to add a unique id and structure each data item.
