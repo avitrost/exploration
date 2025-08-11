@@ -37,7 +37,7 @@ if __name__ == '__main__':
 
     # 'lighteval/MATH' is no longer available on huggingface.
     # Use mirror repo: DigitalLearningGmbH/MATH-lighteval
-    data_source = 'Maxwell-Jia/AIME_2024'
+    data_source = 'aime-Maxwell-Jia/AIME_2024'
     print(f"Loading the {data_source} dataset from huggingface...", flush=True)
     dataset = datasets.load_dataset(data_source, trust_remote_code=True)
 
